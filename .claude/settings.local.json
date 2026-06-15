@@ -76,7 +76,8 @@
       "Bash(.venv/bin/python -c \"import pypdfium2 as p; print\\(len\\(p.PdfDocument\\('report/Chapters_1-3_Draft.pdf'\\)\\)\\)\")",
       "Bash(printf '\\\\n# LaTeX build artifacts\\\\n*.aux\\\\n*.out\\\\n*.toc\\\\n*.synctex.gz\\\\nreport/*.log\\\\n\\\\n# Local tool binaries\\\\n.tools/\\\\n')",
       "Bash(rm -f report/*.aux report/*.out report/*.log report/*.toc)",
-      "Bash(git check-ignore *)"
+      "Bash(git check-ignore *)",
+      "Bash(cd \"/Users/aashrithakanagala/Desktop/final *)"
     ]
   }
 }

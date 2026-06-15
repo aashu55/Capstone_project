@@ -59,33 +59,16 @@
 \textbf{Submitted by} & Aashritha Krishna Kanagala \\
 \textbf{Program} & Master of Science in Engineering Management (MSEM) \\
 \textbf{Course} & EMGT 7945 MS Project \\
-\textbf{Department} & Mechanical and Industrial Engineering \\
 \textbf{University} & Northeastern University, Boston, Massachusetts \\
 \textbf{Supervisor} & Professor Sivarit (Tony) Sultornsanee \\
 \textbf{Date} & June 2026 \\
 \end{tabular}
 \end{center}
 
-\vspace{14pt}
-\noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
-\textbf{Draft status.} This initial draft delivers Chapters 1--3 (Introduction,
-Literature Review, Methodology) and reports the implemented pipeline, Mobility
-Equity Score (MES), and interactive dashboard, all running end-to-end for the
-three Phase-1 cities (Chicago, Houston, Seattle) on \emph{measured open data
-across every dimension}: transit (GTFS --- CTA, METRO Houston, King County Metro),
-walkability (EPA Smart Location Database), bicycle (OpenStreetMap), EV charging
-(OpenStreetMap charging points), and demographics (Census ACS 2019--2023). One
-data caveat carried to Chapter~5: the EV layer uses community-maintained OSM
-charging points as a lower-bound proxy for the authoritative DOE/NREL AFDC
-inventory. Chapter~4 (Results) is forthcoming; the analytical machinery is
-validated on the live data.}}
-
-\vspace{6pt}
-
 % ============================== CHAPTER 1 ==============================
 \section{Introduction and Motivation}
 
-\subsection{1.1\quad Background}
+\subsection{Background}
 Transportation is one of the most fundamental determinants of economic
 opportunity in urban America. A person's ability to reach employment, healthcare,
 education, and essential services depends on a layered ecosystem of
@@ -106,7 +89,7 @@ Transit Database, and OpenStreetMap bicycle data each measure one dimension in
 isolation. No open-access tool integrates all four into a single
 neighborhood-level equity framework---the gap this project fills.
 
-\subsection{1.2\quad Problem Statement}
+\subsection{Problem Statement}
 Low-income and minority neighborhoods in major U.S. cities likely experience
 compounded, multi-dimensional mobility disadvantage, scoring poorly not in one
 dimension but across several simultaneously. The magnitude of this compounding
@@ -114,7 +97,7 @@ effect, and the specific neighborhoods where it is most severe, have not been
 quantified in an integrated, publicly accessible format. This directly impedes
 evidence-based infrastructure-investment decisions at the city and federal levels.
 
-\subsection{1.3\quad Research Questions}
+\subsection{Research Questions}
 The project is guided by one central question and four sub-questions:
 \begin{enumerate}[leftmargin=1.4em,itemsep=1pt]
 \item \textbf{Central.} To what extent do low-income and minority neighborhoods
@@ -132,7 +115,7 @@ composition, vehicle access, and tenure, and in what direction and magnitude?
 sub-indices and to the percentile threshold defining a mobility desert?
 \end{enumerate}
 
-\subsection{1.4\quad Specific Objectives}
+\subsection{Specific Objectives}
 \begin{enumerate}[leftmargin=1.4em,itemsep=1pt]
 \item Construct a Mobility Equity Score (MES) by aggregating four mobility
 sub-indices at the census-tract level across the study cities.
@@ -146,7 +129,7 @@ exploration and city comparison.
 transportation departments.
 \end{enumerate}
 
-\subsection{1.5\quad Significance}
+\subsection{Significance}
 Academically, this project fills a documented gap in the mobility-equity
 literature by providing the first integrated four-dimension index at the
 census-tract level with explicit, testable methodological choices. Practically,
@@ -155,7 +138,7 @@ the federal Justice40 mandate to direct infrastructure benefits to disadvantaged
 communities~\cite{argonne2022}, helping agencies target investment toward the
 neighborhoods that need it most.
 
-\subsection{1.6\quad Organization of the Report}
+\subsection{Organization of the Report}
 Chapter~2 reviews the literature on transportation equity, the four mobility
 dimensions, composite-indicator construction, and spatial methods. Chapter~3
 specifies the methodology in full. Chapters~4 and~5 (forthcoming) present results
@@ -164,7 +147,7 @@ and discussion.
 % ============================== CHAPTER 2 ==============================
 \section{Literature Review}
 
-\subsection{2.1\quad Transit Equity and Transit Deserts}
+\subsection{Transit Equity and Transit Deserts}
 Public transit accessibility is both a material and a social phenomenon shaping
 employment access and quality of life~\cite{ermagun2020}. Aman and
 Smith-Colin~\cite{aman2020} introduced a transit-desert framework quantifying the
@@ -176,7 +159,7 @@ directing 40\% of infrastructure benefits to disadvantaged communities, demands
 exactly the granular, neighborhood-level measurement tools this project
 builds~\cite{argonne2022}.
 
-\subsection{2.2\quad Urban Walkability and Equity}
+\subsection{Urban Walkability and Equity}
 The EPA National Walkability Index---incorporating intersection density,
 land-use mix, and destination proximity---is the standard neighborhood
 walkability measure~\cite{epa2024}. Research consistently shows walkability is
@@ -185,7 +168,7 @@ walkable neighborhoods~\cite{urban2022}. Toolkits such as the 15-minute-city
 score~\cite{albashir2024} operationalize walkable access but stop short of
 integrating other mobility modes.
 
-\subsection{2.3\quad Bicycle Infrastructure Equity}
+\subsection{Bicycle Infrastructure Equity}
 Bicycle infrastructure is a recognized component of equitable, low-carbon
 mobility, yet provision is uneven: dedicated facilities are concentrated in
 higher-income areas, and bikeability indices remain
@@ -193,7 +176,7 @@ fragmented~\cite{ahmed2024,sustrans2023}. OpenStreetMap, accessed through the
 OSMnx library~\cite{boeing2017}, has become the standard open source for
 extracting and analyzing bicycle networks at scale.
 
-\subsection{2.4\quad Electric-Vehicle Charging Equity}
+\subsection{Electric-Vehicle Charging Equity}
 As fleets electrify, equitable access to public charging---especially for
 households without home charging---is an emerging equity concern. Lou et
 al.~\cite{lou2025} analyzed 121 million U.S. households and found disadvantaged
@@ -202,7 +185,7 @@ among renters. Chen and Li~\cite{chenli2024} found that 60--80\% of U.S. census
 tracts have no public charging access at all, with extreme geographic
 concentration.
 
-\subsection{2.5\quad Composite Indicators in Public Policy}
+\subsection{Composite Indicators in Public Policy}
 Composite indicators compress multiple variables into a single, communicable
 number; the OECD/JRC \emph{Handbook on Constructing Composite
 Indicators}~\cite{nardo2008} is the canonical methodological reference,
@@ -211,7 +194,7 @@ robustness/sensitivity analysis. It stresses that normalization and weighting ar
 value-laden and must be paired with sensitivity analysis---a requirement this
 study meets through its weighting-scheme and threshold tests (\S3.7--\S3.8).
 
-\subsection{2.6\quad Spatial Analysis Methods}
+\subsection{Spatial Analysis Methods}
 Because mobility infrastructure is spatially structured, the analysis uses
 established spatial-statistical tools. Global and local Moran's
 $I$~\cite{anselin1995} test whether MES values cluster in space and locate
@@ -219,7 +202,7 @@ significant low-low cold spots. K-means clustering with silhouette-based model
 selection~\cite{rousseeuw1987} derives an interpretable typology of neighborhood
 mobility profiles.
 
-\subsection{2.7\quad Gap in Existing Tools}
+\subsection{Gap in Existing Tools}
 The EPA Smart Location Database, DOE AFDC locator, the Urban Institute SITE
 tool~\cite{urbanSITE2025}, and the Oliver Wyman Forum Urban Mobility Readiness
 Index~\cite{oliverwyman2024} each address one dimension or one geographic scale.
@@ -231,7 +214,7 @@ evidence-based intervention tools.
 % ============================== CHAPTER 3 ==============================
 \section{Methodology}
 
-\subsection{3.1\quad Study Area}
+\subsection{Study Area}
 The unit of analysis is the U.S. Census tract (average 1,500--4,000 residents).
 Three structurally distinct cities were selected for Phase~1 to stress-test the
 method across mobility regimes (Table~\ref{tab:cities}); Phase~2 will extend to
@@ -255,7 +238,7 @@ Seattle & Washington (53) & King (033) & 495 & Progressive transit and EV invest
 \end{tabularx}
 \end{table}
 
-\subsection{3.2\quad Mobility Equity Score (MES)}
+\subsection{Mobility Equity Score (MES)}
 The MES is a composite index computed for each census tract from four
 equally-weighted sub-indices (25\% each), each normalized to a 0--100 scale by
 min--max scaling \emph{within each city} before aggregation. Higher scores
@@ -288,7 +271,7 @@ deserts}. The MES is cross-referenced with Census ACS variables: median househol
 income, percent non-white, percent zero-vehicle households, and percent
 renter-occupied units.
 
-\subsection{3.3\quad Data Sources}
+\subsection{Data Sources}
 All data are freely available with no licensing restrictions
 (Table~\ref{tab:sources}).
 
@@ -311,7 +294,7 @@ Census TIGER/Line (2023, 2019) & Tract \& block-group boundaries & Free download
 \end{tabularx}
 \end{table}
 
-\subsection{3.4\quad Data Collection and Preprocessing}
+\subsection{Data Collection and Preprocessing}
 All layers are reprojected to EPSG:4326 for storage and mapping and to USA
 Contiguous Albers Equal Area (EPSG:5070) for any length/area/distance
 computation, so metrics are in true metres. GEOIDs are zero-padded strings (11
@@ -326,7 +309,7 @@ area-weighted onto the 2023 tracts, each tract's value being the area-weighted
 mean of its overlapping block-group pieces. Missing values are preserved, not
 imputed, so data gaps remain visible.
 
-\subsection{3.5\quad Sub-Index Computation}
+\subsection{Sub-Index Computation}
 \textbf{Transit.} From GTFS \texttt{stops} and \texttt{stop\_times}, AM-peak
 (07:00--09:00) departures per stop are converted to trips/hour and the daily
 service span is computed. Stops are spatially joined to a 0.5-mile buffer of each
@@ -343,13 +326,13 @@ normalized and averaged. The authoritative source is the DOE/NREL AFDC; where
 that API is unreachable, the pipeline falls back to OSM
 \texttt{amenity=charging\_station} points, a key-free lower-bound proxy.
 
-\subsection{3.6\quad Normalization and MES Construction}
+\subsection{Normalization and MES Construction}
 Each raw sub-index is rescaled by min--max normalization,
 $x_{\text{norm}} = \dfrac{x - x_{\min}}{x_{\max}-x_{\min}}\times 100$, computed
 within each city, and combined as the equally-weighted sum in \S3.2. A robust
 percentile-rank variant is retained for sensitivity checks.
 
-\subsection{3.7\quad Weighting Methodology and Sensitivity Analysis}
+\subsection{Weighting Methodology and Sensitivity Analysis}
 Because equal weighting is itself a value choice, three alternatives are computed
 and compared: \emph{entropy} weighting (objective weights from each sub-index's
 dispersion), \emph{PCA} weighting (first-principal-component loadings), and
@@ -357,14 +340,14 @@ dispersion), \emph{PCA} weighting (first-principal-component loadings), and
 equity correlations are recomputed, and the stability of the conclusions is
 reported~\cite{nardo2008}.
 
-\subsection{3.8\quad Mobility-Desert Classification}
+\subsection{Mobility-Desert Classification}
 A mobility desert is a tract below the city's 25th MES percentile; a compounded
 desert is below the 25th percentile in $\geq 2$ sub-indices. Because the cut is
 arbitrary, a threshold sensitivity analysis recomputes the desert set at the
 20th, 25th, and 30th percentiles and reports the Jaccard overlap with the
 baseline and the demographic profile of flagged tracts at each threshold.
 
-\subsection{3.9\quad Equity Correlation Analysis}
+\subsection{Equity Correlation Analysis}
 Pearson correlations relate the MES (and each sub-index) to the four demographic
 variables, with two-sided $p$-values and 95\% confidence intervals from the
 Fisher $z$-transformation, $z=\operatorname{arctanh}(r)$,
@@ -372,20 +355,20 @@ $\mathrm{SE}=1/\sqrt{n-3}$, $\mathrm{CI}=\tanh(z\pm 1.96\,\mathrm{SE})$. A negat
 MES--income or MES--percent-non-white correlation would indicate that
 more-disadvantaged neighborhoods receive less mobility infrastructure.
 
-\subsection{3.10\quad Spatial Autocorrelation}
+\subsection{Spatial Autocorrelation}
 Global Moran's $I$ tests spatial clustering of MES using queen-contiguity,
 row-standardized weights with 999 permutations; Local Moran's $I$ (LISA)
 classifies each tract as high-high, low-low, high-low, low-high, or
 non-significant, mapping low-low clusters as mobility cold spots~\cite{anselin1995}.
 
-\subsection{3.11\quad Cluster Analysis}
+\subsection{Cluster Analysis}
 K-means clustering on the four standardized sub-indices derives a typology of
 neighborhood mobility profiles; $k$ is chosen by maximizing the mean silhouette
 score over $k\in\{2,\dots,7\}$, with the inertia (elbow) curve reported for
 validation~\cite{rousseeuw1987}. Each cluster is labelled from its centroid
 profile.
 
-\subsection{3.12\quad Dashboard Development}
+\subsection{Dashboard Development}
 The dashboard (Plotly Dash with Dash Bootstrap Components) provides a tract-level
 choropleth of the MES or any sub-index with desert filters; a click-through side
 panel (score, city percentile, sub-index bars versus the city median,
@@ -393,7 +376,7 @@ auto-generated interpretation, and demographics); a city equity-gap comparison
 (median MES of the poorest versus richest income quintile); a ranked table of the
 most disadvantaged tracts; and CSV/PNG export.
 
-\subsection{3.13\quad Reproducibility and Implementation Status}
+\subsection{Reproducibility and Implementation Status}
 All processing is in Python~3.11 (pandas, geopandas, numpy, scipy, scikit-learn,
 PySAL). Every stage is an independently-runnable module, raw downloads are cached,
 and a \texttt{pytest} suite covers normalization, MES construction, and the
