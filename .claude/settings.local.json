@@ -69,7 +69,14 @@
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" --max-time 20 \"https://catalog.data.gov/\")",
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} size %{size_download}\\\\n\" --max-time 25 \"https://afdc.energy.gov/api/alt-fuel-stations/v1.csv?fuel_type=ELEC&state=WA&api_key=DEMO_KEY\")",
       "WebFetch(domain:catalog.data.gov)",
-      "Bash(git commit -q -m 'feat: real data for all layers \\(Chicago/Seattle fully real; Houston transit only placeholder\\) *)"
+      "Bash(git commit -q -m 'feat: real data for all layers \\(Chicago/Seattle fully real; Houston transit only placeholder\\) *)",
+      "Bash(git commit -q -m 'feat: Houston transit now real via Mobility Database — all 3 cities 100% real *)",
+      "Bash(./tectonic --version)",
+      "Bash(.tools/tectonic --outdir report report/Chapters_1-3_Draft.tex)",
+      "Bash(.venv/bin/python -c \"import pypdfium2 as p; print\\(len\\(p.PdfDocument\\('report/Chapters_1-3_Draft.pdf'\\)\\)\\)\")",
+      "Bash(printf '\\\\n# LaTeX build artifacts\\\\n*.aux\\\\n*.out\\\\n*.toc\\\\n*.synctex.gz\\\\nreport/*.log\\\\n\\\\n# Local tool binaries\\\\n.tools/\\\\n')",
+      "Bash(rm -f report/*.aux report/*.out report/*.log report/*.toc)",
+      "Bash(git check-ignore *)"
     ]
   }
 }

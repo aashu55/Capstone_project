@@ -29,3 +29,13 @@ venv/
 # Allow processed outputs to be tracked (small CSV/GeoJSON), but ignore huge intermediates
 data/raw/*/*.geojson
 !data/processed/
+
+# LaTeX build artifacts
+*.aux
+*.out
+*.toc
+*.synctex.gz
+report/*.log
+
+# Local tool binaries
+.tools/
