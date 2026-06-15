@@ -22,15 +22,23 @@ import zipfile
 
 import requests
 
+import os
+
 from src.config import CITIES, GTFS_DIR, TRANSITLAND_API_KEY
 
 TL_FEEDS = "https://transit.land/api/v2/rest/feeds"
+MOBILITYDB_API = "https://api.mobilitydatabase.org/v1"
+MOBILITYDB_REFRESH_TOKEN = os.getenv("MOBILITYDB_REFRESH_TOKEN")
+
+# Mobility Database feed IDs for operators without a key-free direct endpoint.
+MOBILITYDB_FEED_IDS = {
+    "houston": "mdb-154",   # METRO Houston (RideMetro now requires API registration)
+}
 
 # Known direct static-GTFS endpoints for the primary operator in each city,
-# used as a fallback when the transit.land API is unavailable.
+# used when no token is needed.
 DIRECT_FEEDS = {
     "chicago": "https://www.transitchicago.com/downloads/sch_data/google_transit.zip",
-    "houston": "https://www.ridemetro.org/SiteCollectionDocuments/googletransitfeed/google_transit.zip",
     "seattle": "https://metro.kingcounty.gov/GTFS/google_transit.zip",
 }
 
@@ -70,11 +78,37 @@ def transitland_feed_url(city_key: str) -> str | None:
     return None
 
 
+def mobilitydb_feed_url(city_key: str) -> str | None:
+    """Resolve a city's latest GTFS dataset URL via the Mobility Database API.
+
+    Exchanges the refresh token for an access token, then reads the feed's
+    `latest_dataset.hosted_url`. Used for operators (e.g. Houston METRO) that no
+    longer publish a key-free direct feed.
+    """
+    feed_id = MOBILITYDB_FEED_IDS.get(city_key)
+    if not (feed_id and MOBILITYDB_REFRESH_TOKEN):
+        return None
+    try:
+        tok = requests.post(f"{MOBILITYDB_API}/tokens",
+                            json={"refresh_token": MOBILITYDB_REFRESH_TOKEN}, timeout=60)
+        tok.raise_for_status()
+        access = tok.json()["access_token"]
+        feed = requests.get(f"{MOBILITYDB_API}/gtfs_feeds/{feed_id}",
+                            headers={"Authorization": f"Bearer {access}"}, timeout=60)
+        feed.raise_for_status()
+        return (feed.json().get("latest_dataset") or {}).get("hosted_url")
+    except (requests.RequestException, KeyError) as exc:
+        print(f"  Mobility Database lookup failed: {exc}")
+        return None
+
+
 def fetch_city_gtfs(city_key: str) -> bool:
     cfg = CITIES[city_key]
     dest = GTFS_DIR / f"{city_key}_gtfs.zip"
     print(f"[{cfg['name']}] fetching GTFS feed ...")
-    url = transitland_feed_url(city_key) or DIRECT_FEEDS.get(city_key)
+    url = (transitland_feed_url(city_key)
+           or DIRECT_FEEDS.get(city_key)
+           or mobilitydb_feed_url(city_key))
     if not url:
         print(f"  no feed URL available for {city_key}")
         return False

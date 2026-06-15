@@ -8,21 +8,19 @@
 ---
 
 > *Note on draft status.* This draft establishes the problem, situates it in the
-> literature, and specifies the methodology in full. The data pipeline,
-> Mobility Equity Score (MES) computation, and interactive dashboard are
-> implemented and run end-to-end for the three Phase-1 cities (Chicago, Houston,
-> Seattle) on **measured open data**: walkability (EPA Smart Location Database),
-> bicycle (OpenStreetMap), EV charging (OpenStreetMap `amenity=charging_station`),
-> and demographics (Census ACS 5-year 2019–2023) for all three cities, plus
-> transit (GTFS) for Chicago (CTA) and Seattle (King County Metro). The single
-> remaining placeholder is the **Houston transit** layer, for which no key-free
-> GTFS endpoint is currently available (RideMetro requires API registration); it
-> is clearly labelled and excluded from interpretation. Two data caveats are
-> carried forward to Chapter 5: the EV layer uses community-maintained OSM
-> charging points (a lower-bound proxy relative to the authoritative DOE/NREL
-> AFDC inventory, which was unreachable on the development network), and the
-> measures are supply-side throughout. Chapter 4 (Results) is forthcoming; no
-> placeholder values are interpreted as findings in this draft.
+> literature, and specifies the methodology in full. The data pipeline, Mobility
+> Equity Score (MES) computation, and interactive dashboard are implemented and
+> run end-to-end for all three Phase-1 cities (Chicago, Houston, Seattle) on
+> **measured open data across every dimension**: transit (GTFS — CTA, METRO
+> Houston, King County Metro), walkability (EPA Smart Location Database), bicycle
+> (OpenStreetMap), EV charging (OpenStreetMap `amenity=charging_station`), and
+> demographics (Census ACS 5-year 2019–2023). One data caveat is carried forward
+> to Chapter 5: the EV layer uses community-maintained OSM charging points (a
+> lower-bound proxy relative to the authoritative DOE/NREL AFDC inventory, which
+> was unreachable on the development network); the measures are also supply-side
+> throughout. Chapter 4 (Results) is forthcoming and will present the substantive
+> findings; the correlation and clustering machinery is already validated on the
+> live data.
 
 ---
 

@@ -1,4 +1,4 @@
 transit_norm,walk_norm,bike_norm,ev_norm,cluster,label,n_tracts
-44.1,29.2,0.6,33.7,0,Uniformly under-served,465
-74.4,65.7,2.6,45.0,1,"Transit-rich, bike-poor",556
-74.5,71.5,38.5,46.7,2,Well-served / multimodal,94
+1.1,29.2,0.7,34.5,0,Uniformly under-served,484
+55.0,71.5,38.5,46.7,1,Well-served / multimodal,94
+53.1,67.0,2.5,44.6,2,"Walk-rich, bike-poor",537

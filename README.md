@@ -160,15 +160,15 @@ status:
 | City | Transit | Walk | Bike | EV | Demographics |
 |------|---------|------|------|----|--------------|
 | Chicago | ✅ GTFS (CTA) | ✅ EPA | ✅ OSM | ✅ OSM | ✅ ACS |
+| Houston | ✅ GTFS (METRO) | ✅ EPA | ✅ OSM | ✅ OSM | ✅ ACS |
 | Seattle | ✅ GTFS (KCM) | ✅ EPA | ✅ OSM | ✅ OSM | ✅ ACS |
-| Houston | ⏳ placeholder | ✅ EPA | ✅ OSM | ✅ OSM | ✅ ACS |
 
-**Chicago and Seattle are fully real across all dimensions.** The only
-placeholder is Houston transit (no key-free GTFS endpoint — RideMetro requires
-API registration). The EV layer uses OpenStreetMap charging points (key-free,
-reachable) as a lower-bound proxy; run `fetch_afdc.py` with an `NREL_API_KEY` on
-a network that can reach `developer.nrel.gov` for the authoritative AFDC
-inventory, then re-run steps 5–6.
+**All three cities are fully real across every dimension.** Houston transit is
+resolved via the Mobility Database API (set `MOBILITYDB_REFRESH_TOKEN` in `.env`;
+RideMetro no longer publishes a key-free direct feed). The EV layer uses
+OpenStreetMap charging points (key-free) as a lower-bound proxy; run
+`fetch_afdc.py` with an `NREL_API_KEY` on a network that can reach
+`developer.nrel.gov` for the authoritative AFDC inventory, then re-run steps 5–6.
 
 ---
 
