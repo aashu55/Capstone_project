@@ -1,0 +1,31 @@
+# Raw / large data
+data/raw/
+*.zip
+*.gdb/
+*.gpkg-wal
+*.gpkg-shm
+
+# OSMnx HTTP cache (regenerated on fetch)
+cache/
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Allow processed outputs to be tracked (small CSV/GeoJSON), but ignore huge intermediates
+data/raw/*/*.geojson
+!data/processed/

@@ -1,0 +1,3 @@
+transit_norm,walk_norm,bike_norm,ev_norm,cluster,label,n_tracts
+76.5,73.6,7.3,76.5,0,Well-served / multimodal,971
+34.7,54.3,0.3,34.2,1,Uniformly under-served,361

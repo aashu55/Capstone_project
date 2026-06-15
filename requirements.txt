@@ -1,0 +1,46 @@
+# Urban Mobility Equity Dashboard — Python dependencies
+# Target: Python 3.11
+#
+# Core data processing
+pandas>=2.0,<2.3
+numpy>=1.24,<2.0
+scipy>=1.10,<1.14
+pyarrow>=14.0
+
+# Geospatial
+geopandas>=0.14,<1.1
+shapely>=2.0
+fiona>=1.9
+pyproj>=3.5
+rtree>=1.0
+
+# Spatial statistics (PySAL ecosystem)
+esda>=2.5
+libpysal>=4.9
+
+# Machine learning
+scikit-learn>=1.3,<1.6
+
+# Data acquisition
+requests>=2.31
+osmnx>=1.9
+cenpy>=1.0          # Census API convenience wrapper (alternative: census)
+census>=0.8         # lightweight Census API client
+gtfs-functions==2.5 # GTFS parsing (2.7.0 wheel is broken; 2.5 is last good release)
+h3<4                # gtfs-functions 2.5 uses the legacy h3 v3 API
+python-dotenv>=1.0
+tqdm>=4.66
+
+# Visualization
+plotly>=5.18,<6.0
+matplotlib>=3.7
+seaborn>=0.13
+folium>=0.15
+
+# Dashboard
+dash>=2.14,<3.0
+dash-bootstrap-components>=1.5
+dash-leaflet>=1.0
+
+# Testing
+pytest>=7.4
