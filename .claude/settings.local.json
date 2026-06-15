@@ -77,7 +77,8 @@
       "Bash(printf '\\\\n# LaTeX build artifacts\\\\n*.aux\\\\n*.out\\\\n*.toc\\\\n*.synctex.gz\\\\nreport/*.log\\\\n\\\\n# Local tool binaries\\\\n.tools/\\\\n')",
       "Bash(rm -f report/*.aux report/*.out report/*.log report/*.toc)",
       "Bash(git check-ignore *)",
-      "Bash(cd \"/Users/aashrithakanagala/Desktop/final *)"
+      "Bash(cd \"/Users/aashrithakanagala/Desktop/final *)",
+      "Bash(cd \"/Users/aashrithakanagala/Desktop/final project\" && .tools/tectonic --outdir report report/Chapters_1-3_Draft.tex 2>&1 | grep -iE \"overfull|underfull|error\" | head; rm -f report/*.aux report/*.log 2>/dev/null; echo \"done\")"
     ]
   }
 }

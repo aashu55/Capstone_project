@@ -10,6 +10,7 @@
 \usepackage{times}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{microtype}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -65,6 +66,12 @@
 \end{tabular}
 \end{center}
 
+\vspace{18pt}
+{\hypersetup{linkcolor=black}
+\renewcommand{\contentsname}{\normalsize\bfseries Table of Contents}
+\tableofcontents}
+\newpage
+
 % ============================== CHAPTER 1 ==============================
 \section{Introduction and Motivation}
 
@@ -90,12 +97,14 @@ isolation. No open-access tool integrates all four into a single
 neighborhood-level equity framework---the gap this project fills.
 
 \subsection{Problem Statement}
+\begin{sloppypar}
 Low-income and minority neighborhoods in major U.S. cities likely experience
 compounded, multi-dimensional mobility disadvantage, scoring poorly not in one
 dimension but across several simultaneously. The magnitude of this compounding
 effect, and the specific neighborhoods where it is most severe, have not been
 quantified in an integrated, publicly accessible format. This directly impedes
 evidence-based infrastructure-investment decisions at the city and federal levels.
+\end{sloppypar}
 
 \subsection{Research Questions}
 The project is guided by one central question and four sub-questions:
@@ -388,7 +397,7 @@ three cities, confirming strong spatial clustering of mobility access; the
 substantive equity findings are deferred to Chapter~4.
 
 % ============================== REFERENCES ==============================
-\section*{References}
+% (the thebibliography environment emits its own "References" heading)
 \addcontentsline{toc}{section}{References}
 \small
 \begin{thebibliography}{99}
