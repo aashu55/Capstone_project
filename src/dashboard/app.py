@@ -30,4 +30,6 @@ register_callbacks(app)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8050)
+    # threaded=True so concurrent callbacks (map, equity gap, ranking all fire on
+    # load) don't block one another on the single-threaded dev server.
+    app.run(debug=True, port=8050, threaded=True)

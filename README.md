@@ -132,6 +132,21 @@ interpretation, demographics), a city equity-gap comparison (poorest vs richest
 income quintile), a ranked table of the most disadvantaged tracts, and CSV
 downloads.
 
+### Screenshots
+
+Chicago Mobility Equity Score (darker red = worse access):
+
+![Dashboard MES map — Chicago](data/outputs/figures/dashboard_map_chicago.png)
+
+Equity-gap panel — median MES of the poorest vs richest income quintile per city
+(*shown with placeholder demographics; run `fetch_census` for real ACS values*):
+
+![Equity gap by income quintile](data/outputs/figures/dashboard_equity_gap.png)
+
+Static multi-panel choropleth for the report (MES + four sub-indices), e.g. Chicago:
+
+![Chicago choropleths](data/outputs/figures/choropleth_chicago.png)
+
 ---
 
 ## 6. Data status

@@ -1,5 +1,0 @@
-[EPA] downloading SLD CSV (~200 MB) from https://edg.epa.gov/EPADataCommons/public/OA/EPA_SmartLocationDatabase_V3_Jan_2021_Final.csv ...
-[EPA] cached 220,740 block groups -> sld_v3_natwalkind.parquet
-[Chicago] 0 block groups -> chicago_walkability.csv
-[Houston] 0 block groups -> houston_walkability.csv
-[Seattle] 0 block groups -> seattle_walkability.csv

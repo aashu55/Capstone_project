@@ -65,6 +65,10 @@ def choropleth(gdf: gpd.GeoDataFrame, layer: str, desert_only: bool = False) -> 
     if desert_only and "mobility_desert" in data.columns:
         data = data[data["mobility_desert"]]
 
+    # Simplify geometry (~50 m tolerance) so the choropleth payload stays small
+    # and the dev server renders quickly even for 1,300+ tract cities.
+    data = data.copy()
+    data["geometry"] = data.geometry.simplify(0.0005, preserve_topology=True)
     geojson = json.loads(data.to_json())
     center = data.geometry.union_all().centroid
     fig = px.choropleth_mapbox(

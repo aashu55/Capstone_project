@@ -56,17 +56,23 @@ def make_placeholder_demographics(tracts: gpd.GeoDataFrame, seed: int = 7) -> pd
         "pct_nonwhite": (75 - 45 * d + rng.normal(0, 12, n)).clip(2, 99),
         "pct_no_vehicle": (35 - 28 * d + rng.normal(0, 6, n)).clip(0, 80),
         "pct_renter": (70 - 45 * d + rng.normal(0, 10, n)).clip(5, 98),
+        "demo_placeholder": 1,   # marker so this is never mistaken for real ACS data
     })
 
 
 def load_demographics(city_key: str, tracts: gpd.GeoDataFrame) -> tuple[pd.DataFrame, bool]:
-    path = PROCESSED_DIR / f"demographics_{city_key}.csv"
-    if path.exists():
-        df = pd.read_csv(path, dtype={"GEOID": str})
+    """Return (demographics, is_real). Real ACS data (from fetch_census) has no
+    `demo_placeholder` column; the generated placeholder is flagged and written
+    to a separate file so it can never overwrite or masquerade as real data."""
+    real_path = PROCESSED_DIR / f"demographics_{city_key}.csv"
+    if real_path.exists():
+        df = pd.read_csv(real_path, dtype={"GEOID": str})
         df["GEOID"] = df["GEOID"].str.zfill(11)
-        return df, True
+        if "demo_placeholder" not in df.columns:
+            return df, True
+    # No real data — (re)generate the labelled placeholder.
     demo = make_placeholder_demographics(tracts)
-    demo.to_csv(path, index=False)
+    demo.to_csv(PROCESSED_DIR / f"demographics_{city_key}_PLACEHOLDER.csv", index=False)
     return demo, False
 
 

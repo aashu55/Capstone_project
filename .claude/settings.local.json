@@ -49,7 +49,19 @@
       "Bash(.venv/bin/python -m pip freeze)",
       "Bash(git add *)",
       "Bash(.venv/bin/pip freeze *)",
-      "Bash(awk '{print $2}')"
+      "Bash(awk '{print $2}')",
+      "Bash(git config *)",
+      "Bash(git commit -q -m 'feat: initial Urban Mobility Equity Dashboard — pipeline, MES, analysis, dashboard, Ch.1-3 draft *)",
+      "Bash(curl -sL --max-time 60 -o /tmp/houston_gtfs.zip -w \"HTTP %{http_code} size %{size_download} type %{content_type}\\\\n\" \"https://transitfeeds.com/p/houston-metro/77/latest/download\")",
+      "Bash(.venv/bin/python -c \"import zipfile; zf=zipfile.ZipFile\\('/tmp/houston_gtfs.zip'\\); print\\('valid zip, files:', [n for n in zf.namelist\\(\\)][:6]\\)\")",
+      "Bash(command -v groff)",
+      "Bash(echo \"groff: $\\(command -v groff || echo no\\)\")",
+      "Bash(command -v pdfroff)",
+      "Bash(echo \"pdfroff: $\\(command -v pdfroff || echo no\\)\")",
+      "Bash(command -v wkhtmltopdf)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -o /dev/null -w \"dash HTTP %{http_code}\\\\n\" http://127.0.0.1:8050/)",
+      "Bash(.venv/bin/python -)"
     ]
   }
 }

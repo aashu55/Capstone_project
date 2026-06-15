@@ -11,13 +11,16 @@
 > literature, and specifies the methodology in full. The data pipeline,
 > Mobility Equity Score (MES) computation, and interactive dashboard are
 > implemented and run end-to-end for the three Phase-1 cities (Chicago, Houston,
-> Seattle). At submission, the walkability and bicycle sub-indices use measured
-> open data (EPA Smart Location Database; OpenStreetMap), while the transit, EV,
-> and demographic layers are populated through validated fetchers awaiting API
-> credentials and are temporarily represented by clearly-labelled placeholders
-> for end-to-end testing. Chapter 4 (Results) will report substantive findings
-> once all live sources are ingested; no placeholder values are interpreted as
-> findings in this draft.
+> Seattle). At submission, the **walkability** (EPA Smart Location Database) and
+> **bicycle** (OpenStreetMap) sub-indices use measured open data for all three
+> cities, and the **transit** sub-index uses measured GTFS feeds for Chicago
+> (CTA) and Seattle (King County Metro). The Houston transit feed (no key-free
+> endpoint currently available), the **EV-charging** layer (NREL AFDC, blocked
+> on the development network), and the **demographic** layer (ACS, awaiting a
+> Census API key) are populated through validated fetchers and are temporarily
+> represented by clearly-labelled placeholders for end-to-end testing. Chapter 4
+> (Results) will report substantive findings once all live sources are ingested;
+> no placeholder values are interpreted as findings in this draft.
 
 ---
 
