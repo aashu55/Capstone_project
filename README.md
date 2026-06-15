@@ -101,10 +101,13 @@ python -m src.data_collection.fetch_epa
 # 3. Bicycle network (OpenStreetMap)                           [no key]
 python -m src.data_collection.fetch_osm
 
-# 4. Demographics / EV / transit (need keys; safe to skip)
-python -m src.data_collection.fetch_census   # CENSUS_API_KEY
-python -m src.data_collection.fetch_afdc      # NREL_API_KEY
-python -m src.data_collection.fetch_gtfs      # TRANSITLAND_API_KEY (optional)
+# 4a. EV charging from OpenStreetMap (no key — key-free AFDC alternative)
+python -m src.data_collection.fetch_osm_ev
+
+# 4b. Demographics / EV / transit (need keys; safe to skip)
+python -m src.data_collection.fetch_census   # CENSUS_API_KEY (real ACS demographics)
+python -m src.data_collection.fetch_afdc      # NREL_API_KEY (authoritative EV; overrides OSM)
+python -m src.data_collection.fetch_gtfs      # transit; Chicago/Seattle key-free, Houston needs a token
 
 # 5. Build sub-indices, then the MES GeoJSONs
 python -m src.processing.build_subindices
@@ -151,10 +154,21 @@ Static multi-panel choropleth for the report (MES + four sub-indices), e.g. Chic
 
 ## 6. Data status
 
-Each MES GeoJSON records whether its transit/EV/demographic layers are measured
-or placeholder. With no keys set, **walkability and bicycle are real**; transit,
-EV, and demographics are placeholder. Running the keyed fetchers (step 4) then
-re-running steps 5–6 replaces the placeholders with real data automatically.
+Each MES GeoJSON records whether each layer is measured or placeholder. Current
+status:
+
+| City | Transit | Walk | Bike | EV | Demographics |
+|------|---------|------|------|----|--------------|
+| Chicago | ✅ GTFS (CTA) | ✅ EPA | ✅ OSM | ✅ OSM | ✅ ACS |
+| Seattle | ✅ GTFS (KCM) | ✅ EPA | ✅ OSM | ✅ OSM | ✅ ACS |
+| Houston | ⏳ placeholder | ✅ EPA | ✅ OSM | ✅ OSM | ✅ ACS |
+
+**Chicago and Seattle are fully real across all dimensions.** The only
+placeholder is Houston transit (no key-free GTFS endpoint — RideMetro requires
+API registration). The EV layer uses OpenStreetMap charging points (key-free,
+reachable) as a lower-bound proxy; run `fetch_afdc.py` with an `NREL_API_KEY` on
+a network that can reach `developer.nrel.gov` for the authoritative AFDC
+inventory, then re-run steps 5–6.
 
 ---
 

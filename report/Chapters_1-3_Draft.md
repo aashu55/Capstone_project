@@ -11,16 +11,18 @@
 > literature, and specifies the methodology in full. The data pipeline,
 > Mobility Equity Score (MES) computation, and interactive dashboard are
 > implemented and run end-to-end for the three Phase-1 cities (Chicago, Houston,
-> Seattle). At submission, the **walkability** (EPA Smart Location Database) and
-> **bicycle** (OpenStreetMap) sub-indices use measured open data for all three
-> cities, and the **transit** sub-index uses measured GTFS feeds for Chicago
-> (CTA) and Seattle (King County Metro). The Houston transit feed (no key-free
-> endpoint currently available), the **EV-charging** layer (NREL AFDC, blocked
-> on the development network), and the **demographic** layer (ACS, awaiting a
-> Census API key) are populated through validated fetchers and are temporarily
-> represented by clearly-labelled placeholders for end-to-end testing. Chapter 4
-> (Results) will report substantive findings once all live sources are ingested;
-> no placeholder values are interpreted as findings in this draft.
+> Seattle) on **measured open data**: walkability (EPA Smart Location Database),
+> bicycle (OpenStreetMap), EV charging (OpenStreetMap `amenity=charging_station`),
+> and demographics (Census ACS 5-year 2019–2023) for all three cities, plus
+> transit (GTFS) for Chicago (CTA) and Seattle (King County Metro). The single
+> remaining placeholder is the **Houston transit** layer, for which no key-free
+> GTFS endpoint is currently available (RideMetro requires API registration); it
+> is clearly labelled and excluded from interpretation. Two data caveats are
+> carried forward to Chapter 5: the EV layer uses community-maintained OSM
+> charging points (a lower-bound proxy relative to the authoritative DOE/NREL
+> AFDC inventory, which was unreachable on the development network), and the
+> measures are supply-side throughout. Chapter 4 (Results) is forthcoming; no
+> placeholder values are interpreted as findings in this draft.
 
 ---
 
@@ -302,7 +304,11 @@ area form the raw metric, normalized to 0–100.
 **EV charging (`ev_index.py`).** Public Level-2 and DC-fast stations are spatially
 joined to tracts. Two metrics are computed: chargers per 1,000 residents, and the
 distance from each tract centroid to the nearest DC-fast station (inverted so
-that proximity raises the score). Both are normalized and averaged.
+that proximity raises the score). Both are normalized and averaged. The
+authoritative source is the DOE/NREL AFDC inventory (`fetch_afdc.py`); where that
+API is unreachable, the pipeline falls back to OpenStreetMap
+`amenity=charging_station` points (`fetch_osm_ev.py`), a key-free but
+lower-bound proxy whose completeness limitation is noted in §5.
 
 ### 3.5 Normalization and MES Construction
 

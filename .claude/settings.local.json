@@ -61,7 +61,14 @@
       "Bash(command -v wkhtmltopdf)",
       "mcp__Claude_Preview__preview_start",
       "Bash(curl -s -o /dev/null -w \"dash HTTP %{http_code}\\\\n\" http://127.0.0.1:8050/)",
-      "Bash(.venv/bin/python -)"
+      "Bash(.venv/bin/python -)",
+      "Bash(git commit -q -m 'feat: real transit \\(Chicago/Seattle GTFS\\), report DOCX/PDF, dashboard screenshots *)",
+      "Bash(command -v gh)",
+      "Bash(gh auth *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" --max-time 20 \"https://afdc.energy.gov/\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" --max-time 20 \"https://catalog.data.gov/\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} size %{size_download}\\\\n\" --max-time 25 \"https://afdc.energy.gov/api/alt-fuel-stations/v1.csv?fuel_type=ELEC&state=WA&api_key=DEMO_KEY\")",
+      "WebFetch(domain:catalog.data.gov)"
     ]
   }
 }
