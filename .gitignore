@@ -39,6 +39,3 @@ report/*.log
 
 # Local tool binaries
 .tools/
-
-# Claude local config
-.claude/
