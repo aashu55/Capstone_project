@@ -28,6 +28,7 @@ import seaborn as sns  # noqa: E402
 
 from src.analysis.clustering import label_clusters, run_clustering  # noqa: E402
 from src.analysis.equity_correlation import (correlation_matrix,  # noqa: E402
+                                             internal_consistency,
                                              run_equity_correlations)
 from src.analysis.sensitivity_analysis import threshold_sensitivity  # noqa: E402
 from src.analysis.spatial_autocorrelation import (compute_local_morans,  # noqa: E402
@@ -113,17 +114,23 @@ def lisa_png(lisa_gdf: gpd.GeoDataFrame, city: str) -> None:
 # --------------------------------------------------------------------------- #
 # Per-city analysis
 # --------------------------------------------------------------------------- #
-def analyze_city(city_key: str, morans_rows: list) -> None:
+def analyze_city(city_key: str, morans_rows: list, consistency_rows: list) -> None:
     name = CITIES[city_key]["name"]
     print(f"\n=== Analysis: {name} ===")
     gdf = _load(city_key)
     demo_cols = ["GEOID", "median_income", "pct_nonwhite", "pct_no_vehicle", "pct_renter"]
     demo = gdf[[c for c in demo_cols if c in gdf.columns]].copy()
 
-    # 1. Equity correlations
-    corr = run_equity_correlations(gdf, demo)
+    # 1. Equity correlations (Pearson primary + Spearman robustness check)
+    corr = run_equity_correlations(gdf, demo, method="pearson")
     corr.to_csv(OUTPUTS_DIR / f"equity_correlations_{city_key}.csv", index=False)
+    spear = run_equity_correlations(gdf, demo, method="spearman")
+    spear.to_csv(OUTPUTS_DIR / f"equity_correlations_spearman_{city_key}.csv", index=False)
+    ic = internal_consistency(gdf, SUB_COLS)
+    consistency_rows.append({"city": name, **ic})
     print("  equity correlations:\n", corr.round(3).to_string(index=False))
+    print(f"  internal consistency: mean inter-index r={ic['mean_inter_index_r']:.3f}, "
+          f"Cronbach alpha={ic['cronbach_alpha']:.3f}")
 
     # 2. Global Moran's I
     mi = compute_morans_i(gdf, "MES")
@@ -164,9 +171,11 @@ def analyze_city(city_key: str, morans_rows: list) -> None:
 
 def main(cities: list[str] | None = None) -> None:
     morans_rows: list[dict] = []
+    consistency_rows: list[dict] = []
     for key in (cities or list(CITIES)):
-        analyze_city(key, morans_rows)
+        analyze_city(key, morans_rows, consistency_rows)
     pd.DataFrame(morans_rows).to_csv(OUTPUTS_DIR / "morans_i.csv", index=False)
+    pd.DataFrame(consistency_rows).to_csv(OUTPUTS_DIR / "internal_consistency.csv", index=False)
     print(f"\nAll outputs written to {OUTPUTS_DIR}")
 
 

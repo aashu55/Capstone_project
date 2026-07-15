@@ -131,10 +131,10 @@ and decision criterion used to answer it (developed in Chapter~3).
 
 \begin{enumerate}[leftmargin=1.5em,itemsep=2pt,label=\textbf{RQ\arabic*.}]
 \item \textbf{(Measurement.)} Can four heterogeneous open datasets be integrated
-into a single tract-level composite (MES) that is internally consistent
-(Cronbach-style inter-index agreement reported) and stable under alternative
-weighting schemes (sign and significance of downstream correlations unchanged
-across equal, entropy, PCA, and AHP weights)?
+into a single tract-level composite (MES) that shows coherent internal structure
+(inter-index correlations and Cronbach's $\alpha$ reported) and is stable under
+alternative weighting schemes (sign and significance of downstream correlations
+unchanged across equal, entropy, PCA, and AHP weights)?
 \item \textbf{(Distribution.)} What share of tracts in each city are mobility
 deserts (MES below the 25th percentile) and compounded deserts (bottom quartile
 in $\geq 2$ sub-indices), and is that classification robust to the threshold
@@ -402,8 +402,8 @@ a significance test, and (via the Fisher $z$-transform) a confidence interval,
 z=\operatorname{arctanh}(r),\quad \mathrm{SE}=\tfrac{1}{\sqrt{n-3}},\quad
 \mathrm{CI}_{95\%}=\tanh\!\big(z\pm1.96\,\mathrm{SE}\big).
 \]
-Spearman rank correlation was checked as a monotonic robustness variant and
-agreed in sign and significance.
+Spearman rank correlation is computed as a monotonic robustness variant
+(reported in §4.2); it agrees in sign with Pearson across all cities.
 
 \subsection{Spatial Autocorrelation --- Justification}
 Ordinary correlation ignores that tracts are spatially embedded. Global Moran's
@@ -488,7 +488,14 @@ non-white is positive but weak ($r=0.10$ to $0.14$). In short, supply-side
 mobility infrastructure is greatest where residents are lower-income, car-free,
 and renting --- the dense urban core --- and lowest in higher-income
 auto-oriented peripheries. Figure~\ref{fig:corr} visualizes the full correlation
-structure for Chicago.
+structure for Chicago. A Spearman rank check agrees in sign with every Pearson
+coefficient in all three cities; the strong zero-vehicle and renter associations
+remain strong under ranks, while the weaker income and non-white associations
+attenuate --- indicating the latter are more sensitive to distributional outliers
+and should be read cautiously. The four sub-indices show coherent but
+non-redundant internal structure (mean inter-index Pearson $r = 0.45$--$0.62$;
+Cronbach's $\alpha = 0.74$--$0.85$), confirming they co-vary spatially yet each
+contributes distinct information (RQ1).
 
 \begin{table}[htbp]
 \centering
@@ -693,10 +700,12 @@ snapshot for three metros and is not yet generalizable nationally.
 \subsection{Future Research}
 Priorities are: extending to the Phase-2 cities (Phoenix, Atlanta, Detroit) and
 beyond for national generalizability; substituting authoritative AFDC EV data and
-adding transit \emph{service quality} (headway reliability); incorporating
-demand-side accessibility (jobs reachable within a travel-time budget) to test
-the supply--demand mismatch directly; and a longitudinal extension to measure
-whether targeted investment narrows the gaps the MES identifies.
+adding transit \emph{service quality} (headway reliability, e.g.\ from the FTA
+National Transit Database); layering EPA EJScreen environmental-justice indicators
+alongside the demographic cross-tabs; incorporating demand-side accessibility
+(jobs reachable within a travel-time budget) to test the supply--demand mismatch
+directly; and a longitudinal extension to measure whether targeted investment
+narrows the gaps the MES identifies.
 
 \subsection{Conclusion}
 This project delivers an integrated, transparent, and reproducible measure of
