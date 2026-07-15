@@ -204,7 +204,9 @@ The strongest body of evidence is \emph{single-dimension}. In transit, Aman and
 Smith-Colin~\cite{aman2020} operationalize ``transit deserts'' as a
 tract-level supply--demand gap from GTFS, and Maharjan et al.~\cite{maharjan2024}
 confirm the pattern nationally; both establish that low-income and minority
-tracts are under-served, but neither places transit alongside other modes.
+tracts are under-served --- consistent with evidence that transit access
+directly shapes job accessibility~\cite{ermagun2020} --- but neither places
+transit alongside other modes.
 Walkability research standardizes on the EPA National Walkability
 Index~\cite{epa2024} and documents racialized disparities~\cite{urban2022}, while
 active-travel toolkits~\cite{albashir2024,sustrans2023} refine walk/bike access
@@ -337,6 +339,26 @@ statistic rather than zero-filled, and normalization propagates \texttt{NaN}. Ke
 access; (ii) the 0.5-mile transit buffer approximates walk-access to stops;
 (iii) OSM bike/EV coverage, though community-maintained, is spatially unbiased
 enough for within-city comparison (revisited as a limitation in §5.4).
+
+\subsection{Sub-Index Computation}
+Each raw metric is computed at the tract level before normalization.
+\textbf{Transit.} From GTFS \texttt{stops} and \texttt{stop\_times}, AM-peak
+(07:00--09:00) departures per stop are converted to trips/hour and the daily
+service span (distinct hours with $\geq 1$ departure) is computed; stops are
+spatially joined to a 0.5-mile (804.7\,m) buffer of each tract centroid, and the
+tract's stop density (stops/km$^2$), mean AM-peak frequency, and span are each
+normalized and averaged. \textbf{Walkability.} The area-weighted National
+Walkability Index per tract (§3.4). \textbf{Bicycle.} From the OpenStreetMap
+cyclable network extracted with OSMnx~\cite{boeing2017}, edges are retained as
+dedicated infrastructure when the \texttt{highway} tag is cycleway/path/track or a
+positive \texttt{cycleway} tag is present; edges are clipped to tracts by
+geometric overlay and summed to bike-lane km per km$^2$ of tract land area.
+\textbf{EV charging.} Public stations are spatially joined to tracts; chargers per
+1{,}000 residents and the (inverted) distance from the tract centroid to the
+nearest DC-fast station are each normalized and averaged. The authoritative
+source is the DOE/NREL AFDC; where that API is unreachable the pipeline falls back
+to OSM \texttt{amenity=charging\_station} points, a key-free lower-bound proxy
+(§5.4).
 
 \subsection{Normalization and MES Construction}
 Each raw metric is placed on a common 0--100 scale by \emph{within-city}
