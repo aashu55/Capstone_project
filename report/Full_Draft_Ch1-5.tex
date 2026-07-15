@@ -381,8 +381,8 @@ absent strong prior information~\cite{nardo2008}.
 The equal-weight baseline is a deliberate, stated choice, but its influence is
 tested against three alternatives (§4.6): \emph{entropy} weights (from each
 sub-index's dispersion), \emph{PCA} weights (first-component loadings), and
-\emph{AHP} weights (expert pairwise judgment: transit 0.40, walk 0.30, bike 0.15,
-EV 0.15). If the sign, magnitude, and significance of the equity correlations are
+\emph{AHP-style} weights (illustrative expert priorities pending a formal Analytic
+Hierarchy Process elicitation: transit 0.40, walk 0.30, bike 0.15, EV 0.15). If the sign, magnitude, and significance of the equity correlations are
 stable across all four schemes, the substantive conclusions do not depend on the
 weighting choice --- the criterion for RQ1.
 
@@ -685,7 +685,7 @@ under-served peripheries). Because the pipeline is open and reproducible, any ci
 with GTFS and open data can generate the same diagnostics.
 
 \subsection{Limitations}
-Four limitations bound the conclusions. (1) \emph{Supply-side only}: the MES
+Five limitations bound the conclusions. (1) \emph{Supply-side only}: the MES
 measures infrastructure present, not realized accessibility, service quality,
 affordability, or travel behavior. (2) \emph{EV data}: the EV sub-index uses
 community-maintained OpenStreetMap charging points --- a reachable but
@@ -695,7 +695,12 @@ conservative and are the least certain of the four dimensions. (3)
 \emph{Within-city normalization}: the MES is relative to each city, so cross-city
 \emph{levels} are not directly comparable (within-city patterns and correlations
 are valid). (4) \emph{Cross-sectional, three cities}: the analysis is a single
-snapshot for three metros and is not yet generalizable nationally.
+snapshot for three metros and is not yet generalizable nationally. (5)
+\emph{Inferential}: because the MES is strongly spatially autocorrelated
+(Moran's $I\approx0.9$), observations are not independent, so the correlation
+$p$-values are optimistic; a spatial-regression (spatial-error or lag) model is
+the appropriate next step. The tract-level associations are also ecological and
+do not imply individual-level relationships.
 
 \subsection{Future Research}
 Priorities are: extending to the Phase-2 cities (Phoenix, Atlanta, Detroit) and
