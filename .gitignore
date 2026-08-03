@@ -39,3 +39,9 @@ report/*.log
 
 # Local tool binaries
 .tools/
+
+# Sensitive personal documents (never commit)
+report/USCIS*
+*Backup Code*
+*.p12
+*.pem

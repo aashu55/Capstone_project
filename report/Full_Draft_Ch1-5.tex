@@ -75,16 +75,19 @@ constructs a \emph{Mobility Equity Score} (MES): a transparent, reproducible
 composite index that integrates all four dimensions at the U.S. Census-tract
 level, and applies it to three structurally distinct cities (Chicago, Houston,
 Seattle) using only open data. Across all three cities the MES exhibits strong,
-significant spatial clustering (global Moran's $I = 0.82$--$0.92$, $p < 0.001$)
-and is \emph{negatively} associated with median household income and
+significant spatial clustering (global Moran's $I = 0.82$--$0.92$) and is
 \emph{positively} associated with the share of zero-vehicle and renter
-households --- indicating that supply-side mobility infrastructure concentrates
-in dense, lower-income urban cores, so that mobility ``deserts'' fall
-disproportionately in higher-income, auto-oriented peripheries. This inverts the
-naive expectation and motivates a careful supply-versus-demand interpretation,
-which is the study's central contribution. The methodology is released as an
-open-source pipeline and an interactive dashboard so any city with open data can
-reproduce the analysis.
+households, reflecting that supply-side infrastructure concentrates in dense,
+central tracts. The bivariate \emph{negative} association with median income is
+largely accounted for by urban form: after controlling for population density
+and distance to the central business district --- and after spatial-regression
+correction for the strong spatial dependence --- it attenuates to
+non-significance in Houston, reverses weakly in Chicago, and persists only in
+Seattle. The results are therefore interpreted as \emph{associational} and
+consistent with a supply--\emph{need} mismatch (need proxied by car-free and
+renter households), not as evidence of a causal relationship. The methodology is
+released as an open-source pipeline and an interactive dashboard so any city with
+open data can reproduce the analysis.
 
 \vspace{6pt}
 {\hypersetup{linkcolor=black}
@@ -131,10 +134,10 @@ and decision criterion used to answer it (developed in Chapter~3).
 
 \begin{enumerate}[leftmargin=1.5em,itemsep=2pt,label=\textbf{RQ\arabic*.}]
 \item \textbf{(Measurement.)} Can four heterogeneous open datasets be integrated
-into a single tract-level composite (MES) that shows coherent internal structure
-(inter-index correlations and Cronbach's $\alpha$ reported) and is stable under
-alternative weighting schemes (sign and significance of downstream correlations
-unchanged across equal, entropy, PCA, and AHP weights)?
+into a single tract-level composite (MES) whose components are related but
+non-redundant (inter-sub-index correlations reported) and whose downstream
+findings are stable under alternative weighting schemes (sign and significance
+unchanged across equal, entropy, PCA, and policy-priority weights)?
 \item \textbf{(Distribution.)} What share of tracts in each city are mobility
 deserts (MES below the 25th percentile) and compounded deserts (bottom quartile
 in $\geq 2$ sub-indices), and is that classification robust to the threshold
@@ -178,11 +181,12 @@ and desert thresholds --- is stated and stress-tested through weighting
 analyses, addressing the reproducibility and value-ladenness concerns raised for
 composite indicators~\cite{nardo2008}.
 \item \textbf{An empirical finding.} Across three structurally different cities,
-supply-side mobility infrastructure concentrates in dense, lower-income,
-higher-renter/car-free cores; consequently the MES is \emph{negatively}
-correlated with income and mobility deserts fall in higher-income peripheries.
-This reframes the equity question around a supply--demand mismatch rather than a
-simple ``poor areas are under-served'' narrative (§5).
+supply-side mobility infrastructure concentrates in dense, central tracts that
+tend to be higher-renter and car-free. The bivariate negative association with
+income is shown to be largely an \emph{urban-form artifact} (it does not survive
+density/centrality controls or spatial regression, except in Seattle) ---
+reframing the equity question, associationally, as a supply--\emph{need}
+mismatch rather than a simple ``poor areas are under-served'' narrative (§5).
 \item \textbf{A replication artifact.} A documented Python pipeline (MIT-licensed)
 that reproduces the entire analysis for any U.S. city with open data.
 \end{enumerate}
@@ -484,18 +488,22 @@ zero): the MES is (i) \emph{negatively} associated with median income
 ($r=-0.08$ to $-0.27$), (ii) \emph{positively} and strongly associated with the
 share of zero-vehicle households ($r=0.41$ to $0.69$), and (iii) positively
 associated with renter share ($r=0.53$ to $0.69$). The association with percent
-non-white is positive but weak ($r=0.10$ to $0.14$). In short, supply-side
-mobility infrastructure is greatest where residents are lower-income, car-free,
-and renting --- the dense urban core --- and lowest in higher-income
-auto-oriented peripheries. Figure~\ref{fig:corr} visualizes the full correlation
-structure for Chicago. A Spearman rank check agrees in sign with every Pearson
+non-white is positive but weak ($r=0.10$ to $0.14$). Descriptively, the MES
+co-occurs with higher shares of car-free and renter households --- the dense
+urban core; the raw negative income association is probed for confounding in
+§4.7, where it largely disappears once urban form is controlled. All coefficients
+are associational, not causal, and (as §4.7 shows) their significance is
+overstated by spatial dependence. Figure~\ref{fig:corr} visualizes the full
+correlation structure for Chicago. A Spearman rank check agrees in sign with every Pearson
 coefficient in all three cities; the strong zero-vehicle and renter associations
 remain strong under ranks, while the weaker income and non-white associations
 attenuate --- indicating the latter are more sensitive to distributional outliers
 and should be read cautiously. The four sub-indices show coherent but
-non-redundant internal structure (mean inter-index Pearson $r = 0.45$--$0.62$;
-Cronbach's $\alpha = 0.74$--$0.85$), confirming they co-vary spatially yet each
-contributes distinct information (RQ1).
+non-redundant internal structure (mean inter-sub-index Pearson
+$r = 0.45$--$0.62$, pairwise range $0.26$--$0.81$), i.e.\ related enough to form
+a coherent composite yet distinct enough that each contributes non-redundant
+information --- the appropriate validity evidence for a \emph{formative} index,
+rather than a reflective-scale reliability statistic (RQ1).
 
 \begin{table}[htbp]
 \centering
@@ -623,13 +631,64 @@ maximized at $k=2$.}
 \end{figure}
 
 \subsection{Weighting Sensitivity}
-Re-computing the MES under entropy, PCA, and AHP weights leaves the equity
-conclusions unchanged in sign and significance (Chicago shown): the MES--renter
-correlation stays $r\approx0.57$--$0.59$ and MES--income stays negative
-($-0.085$ to $-0.145$) across all four schemes. The entropy scheme up-weights
-bicycle (0.68) because that sub-index has the highest dispersion, yet even this
-extreme reweighting does not flip any sign --- satisfying the RQ1 stability
-criterion.
+The equal-weight baseline is treated as one scenario among several; entropy and
+PCA weights are objective sensitivity scenarios, and the policy-priority
+(expert-inspired) weights represent a plausible planner preference. The headline
+is \emph{stability}: re-computing the MES under all four schemes leaves the
+equity associations unchanged in sign and significance (Chicago shown ---
+MES--renter $r\approx0.57$--$0.59$; MES--income negative and weak throughout).
+The entropy scheme up-weights bicycle (0.68) because that sub-index has the
+highest dispersion, yet even this extreme reweighting does not flip any sign
+(RQ1).
+
+\subsection{Robustness: Confounding, Spatial Dependence, and EV Data}
+Because the bivariate correlations (§4.2) neither control for confounders nor
+account for the strong spatial dependence (§4.3), four robustness checks were
+run (Table~\ref{tab:robust}).
+
+\emph{Urban-form confounding.} Adding population density and distance to the CBD
+to an OLS of the MES on income sharply changes the income coefficient: it is
+negative and significant bivariately in all three cities, but after controls it
+becomes non-significant in Houston ($p=0.64$), reverses to weakly positive in
+Chicago, and remains negative and significant only in Seattle ($p<10^{-20}$).
+The apparent ``low-income cores are better served'' pattern is thus largely an
+\emph{urban-form artifact} (density and centrality), not an income effect per se
+--- except in Seattle, where it persists.
+
+\emph{Spatial regression.} Fitting spatial-lag and spatial-error models (queen
+contiguity) of the MES on income, renter share, zero-vehicle share, density, and
+CBD distance, the error model is preferred for Chicago and the lag model for
+Houston and Seattle (by AIC). Once spatial dependence is modelled, the income
+association is negligible in Chicago/Houston and modest-negative in Seattle,
+corroborating the OLS result and confirming that ordinary significance was
+overstated.
+
+\emph{Clustering stability.} Across five random initializations the K-means
+partition is perfectly reproducible in every city (mean Adjusted Rand
+Index $=1.00$; silhouette $0.41$--$0.48$), so the typologies are not seed
+artefacts.
+
+\emph{EV data.} Recomputing a three-dimension MES without the (OSM-sourced) EV
+layer barely changes its correlation with income ($|\Delta r| = 0.002$--$0.053$),
+so the conclusions are not driven by the least-certain dimension.
+
+\begin{table}[htbp]
+\centering
+\caption{Robustness checks. Income associations attenuate under urban-form
+controls and spatial regression (except Seattle); clustering is stable and the
+EV layer is non-decisive.}
+\label{tab:robust}
+\small
+\begin{tabularx}{\textwidth}{l Y Y l c c}
+\toprule
+\textbf{City} & \textbf{MES--income, bivariate} & \textbf{+ urban-form controls} & \textbf{Spatial (AIC)} & \textbf{Cluster ARI} & \textbf{EV $|\Delta r|$} \\
+\midrule
+Chicago & $-$, $p{=}.002$ & $+$, weak & error & 1.00 & 0.025 \\
+Houston & $-$, $p{<}.001$ & n.s.\ ($p{=}.64$) & lag & 1.00 & 0.002 \\
+Seattle & $-$, $p{<}.001$ & $-$, $p{<}.001$ & lag & 1.00 & 0.053 \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \subsection{Dashboard Demonstration}
 The interactive dashboard (Figure~\ref{fig:dash}) renders the tract-level MES and
@@ -650,30 +709,37 @@ not a separate analysis.
 % ============================== CHAPTER 5 ==============================
 \section{Discussion and Conclusions}
 
-\subsection{Summary of Major Findings}
-Three findings are robust across all three cities. First, mobility supply is
-\emph{highly spatially clustered} (Moran's $I=0.82$--$0.92$): inequity is
-structural and place-based. Second, the MES is \emph{negatively} associated with
-income and \emph{positively} with car-free and renter shares: supply concentrates
-in dense, lower-income cores. Third, the resulting mobility deserts are therefore
-predominantly \emph{higher-income, auto-oriented peripheries}, though they still
-contain substantial minority populations (52--64\% non-white in Chicago/Houston).
-Bicycle infrastructure is the weakest dimension everywhere, and its scarcity
-defines a recurring ``walk-rich, bike-poor'' neighborhood type.
+\subsection{What the Data Demonstrate}
+This chapter deliberately separates what the analysis \emph{demonstrates} from
+what it \emph{infers}. Four results are demonstrated and robust across all three
+cities. (1) The MES is strongly spatially clustered (Moran's $I=0.82$--$0.92$):
+supply inequity is structural and place-based, not scattered. (2) The MES is
+positively associated with car-free and renter shares (associational; the
+ordinary significance is corrected via spatial regression, §4.7). (3) The
+bivariate \emph{negative} MES--income association is largely explained by urban
+form --- it does not survive density/centrality controls or spatial regression
+except in Seattle --- so it must not be read as an income effect per se. (4) The
+composite is well-behaved: its four sub-indices are related but non-redundant,
+results are stable across weighting schemes, the clusters are perfectly
+reproducible (ARI $=1.0$), and the findings are insensitive to the EV layer.
+Bicycle infrastructure is the weakest dimension everywhere, defining a recurring
+``walk-rich, bike-poor'' neighborhood type.
 
-\subsection{Interpretation: A Supply--Demand Reframing}
-The negative MES--income relationship inverts the naive ``poor neighborhoods are
-under-served'' expectation, but it is not a claim that low-income residents are
-well served in every sense. It is a \emph{supply-side} result: infrastructure
-follows density and land-use mix, which correlate with lower incomes and higher
-renter/car-free shares in these three cities. The equity implication is a
-\emph{mismatch} framing. Where dense low-income cores are well supplied, the
-concern shifts to service \emph{quality} and \emph{affordability} (not captured
-by supply counts); where higher-income peripheries score low, their residents are
-largely car-dependent by means, so low supply is less acute --- \emph{except} for
-the car-free and minority households embedded in those peripheries, who face the
-sharpest supply--demand gap. Compounded deserts and LISA cold spots identify
-precisely those tracts, which is where the framework adds the most policy value.
+\subsection{What We Infer: A Supply--Need Reframing}
+The following is interpretation, not demonstration. Because supply-side
+infrastructure co-occurs with density --- and therefore with car-free and renter
+populations --- the equity question is best framed, associationally, as a
+supply--\emph{need} mismatch: the MES measures supply, while car-free and renter
+shares proxy need; travel demand itself is \emph{not} modelled here. Where dense
+cores are well supplied, the residual concern is plausibly service \emph{quality}
+and \emph{affordability}, which supply counts do not capture; where higher-income
+peripheries score low, their residents are typically car-owning, so low supply is
+likely less acute --- \emph{except} for the car-free and minority households
+embedded in those peripheries (the Chicago/Houston desert tracts are 52--64\%
+non-white), who plausibly face the widest supply--need gap. Compounded deserts and
+LISA cold spots locate those tracts and are where the framework most plausibly
+adds policy value. Seattle, where a negative income gradient persists under
+controls, is the one city that may warrant a closer income-specific look.
 
 \subsection{Implications}
 For practitioners, the MES operationalizes the Justice40 mandate~\cite{argonne2022}
@@ -697,10 +763,11 @@ conservative and are the least certain of the four dimensions. (3)
 are valid). (4) \emph{Cross-sectional, three cities}: the analysis is a single
 snapshot for three metros and is not yet generalizable nationally. (5)
 \emph{Inferential}: because the MES is strongly spatially autocorrelated
-(Moran's $I\approx0.9$), observations are not independent, so the correlation
-$p$-values are optimistic; a spatial-regression (spatial-error or lag) model is
-the appropriate next step. The tract-level associations are also ecological and
-do not imply individual-level relationships.
+(Moran's $I\approx0.9$), ordinary correlation $p$-values are optimistic; we
+therefore report spatial-lag/error models and urban-form controls (§4.7), which
+substantially attenuate the income association. Residual caveats are that the
+associations are ecological (tract-level, not individual-level) and that
+confounders beyond density and centrality are not modelled.
 
 \subsection{Future Research}
 Priorities are: extending to the Phase-2 cities (Phoenix, Atlanta, Detroit) and
@@ -716,7 +783,9 @@ narrows the gaps the MES identifies.
 This project delivers an integrated, transparent, and reproducible measure of
 multi-modal mobility supply at the neighborhood scale, and uses it to show that
 mobility infrastructure in three major U.S. cities is spatially concentrated in
-dense, lower-income cores --- reframing the equity question as a supply--demand
+dense, central tracts --- with the apparent income gradient largely attributable
+to urban form once controls and spatial regression are applied. The equity
+question is therefore reframed, associationally, as a supply--\emph{need}
 mismatch best examined through compounded deserts and cold spots. The open
 pipeline and dashboard make the method immediately transferable to other cities.
 
