@@ -173,7 +173,7 @@ not the result). Specifically:
 \begin{enumerate}[leftmargin=1.5em,itemsep=1pt]
 \item \textbf{An integrated composite.} The first open, reproducible integration
 of transit, walkability, bicycle, and EV-charging supply into a single
-tract-level index, where prior tools measure one dimension or one scale (§2.7).
+tract-level index, where prior tools measure one dimension or one scale (Sec.~2.7).
 \item \textbf{A transparent, tested methodology.} Every modeling choice ---
 indicator selection, within-city min--max normalization, equal-weight baseline,
 and desert thresholds --- is stated and stress-tested through weighting
@@ -186,7 +186,7 @@ tend to be higher-renter and car-free. The bivariate negative association with
 income is shown to be largely an \emph{urban-form artifact} (it does not survive
 density/centrality controls or spatial regression, except in Seattle) ---
 reframing the equity question, associationally, as a supply--\emph{need}
-mismatch rather than a simple ``poor areas are under-served'' narrative (§5).
+mismatch rather than a simple ``poor areas are under-served'' narrative (Sec.~5).
 \item \textbf{A replication artifact.} A documented Python pipeline (MIT-licensed)
 that reproduces the entire analysis for any U.S. city with open data.
 \end{enumerate}
@@ -225,7 +225,7 @@ Composite indicators are attractive for communication but contested on
 methodology. The OECD/JRC handbook~\cite{nardo2008} warns that normalization and
 weighting are value judgments that must be paired with sensitivity analysis ---
 a discipline frequently omitted in applied indices. This project treats that
-critique as a design requirement (§3.6--§3.7) rather than an afterthought,
+critique as a design requirement (Secs.~3.6--3.7) rather than an afterthought,
 distinguishing it from single-shot composites.
 
 \subsection{Existing Integrated Tools --- and Why They Fall Short}
@@ -265,8 +265,8 @@ Oliver Wyman UMRI \cite{oliverwyman2024} & Multi (readiness) & City & No & No \\
 Because infrastructure is spatially structured, the analysis draws on established
 methods: global and local Moran's $I$~\cite{anselin1995} for spatial clustering
 and cold-spot detection, and K-means with silhouette
-validation~\cite{rousseeuw1987} for typology discovery. These are chosen (§3.9--
-§3.11) because they directly answer the distributional and structural research
+validation~\cite{rousseeuw1987} for typology discovery. These are chosen (Sec.~3.9--
+Sec.~3.11) because they directly answer the distributional and structural research
 questions, not merely because they are conventional.
 
 \subsection{Synthesis of the Gap}
@@ -304,7 +304,7 @@ Seattle & Washington (53) & King (033) & 495 & Progressive transit and EV invest
 
 \subsection{Indicator Selection and Sub-Index Definition}
 Indicators were selected against three criteria: (a) \emph{construct validity}
---- each must be an accepted proxy for its dimension in the literature (§2);
+--- each must be an accepted proxy for its dimension in the literature (Sec.~2);
 (b) \emph{national open availability} at $\leq$ tract resolution for
 reproducibility; and (c) \emph{supply orientation} --- each measures
 infrastructure present near residents, keeping the composite conceptually
@@ -342,7 +342,7 @@ statistic rather than zero-filled, and normalization propagates \texttt{NaN}. Ke
 \textbf{assumptions}: (i) supply near the tract centroid proxies residents'
 access; (ii) the 0.5-mile transit buffer approximates walk-access to stops;
 (iii) OSM bike/EV coverage, though community-maintained, is spatially unbiased
-enough for within-city comparison (revisited as a limitation in §5.4).
+enough for within-city comparison (revisited as a limitation in Sec.~5.4).
 
 \subsection{Sub-Index Computation}
 Each raw metric is computed at the tract level before normalization.
@@ -352,7 +352,7 @@ service span (distinct hours with $\geq 1$ departure) is computed; stops are
 spatially joined to a 0.5-mile (804.7\,m) buffer of each tract centroid, and the
 tract's stop density (stops/km$^2$), mean AM-peak frequency, and span are each
 normalized and averaged. \textbf{Walkability.} The area-weighted National
-Walkability Index per tract (§3.4). \textbf{Bicycle.} From the OpenStreetMap
+Walkability Index per tract (Sec.~3.4). \textbf{Bicycle.} From the OpenStreetMap
 cyclable network extracted with OSMnx~\cite{boeing2017}, edges are retained as
 dedicated infrastructure when the \texttt{highway} tag is cycleway/path/track or a
 positive \texttt{cycleway} tag is present; edges are clipped to tracts by
@@ -362,7 +362,7 @@ geometric overlay and summed to bike-lane km per km$^2$ of tract land area.
 nearest DC-fast station are each normalized and averaged. The authoritative
 source is the DOE/NREL AFDC; where that API is unreachable the pipeline falls back
 to OSM \texttt{amenity=charging\_station} points, a key-free lower-bound proxy
-(§5.4).
+(Sec.~5.4).
 
 \subsection{Normalization and MES Construction}
 Each raw metric is placed on a common 0--100 scale by \emph{within-city}
@@ -373,7 +373,7 @@ s^{\text{norm}} = \frac{x - x_{\min}}{x_{\max}-x_{\min}}\times 100,
 chosen over $z$-scores so scores are bounded, interpretable as ``percent of the
 best-served tract in this city,'' and comparable across sub-indices. Because
 normalization is within-city, the MES is a \emph{relative} measure; cross-city
-\emph{levels} are therefore interpreted with caution (§5.4), while within-city
+\emph{levels} are therefore interpreted with caution (Sec.~5.4), while within-city
 patterns and correlations are directly valid. The composite is the weighted sum
 \[
 \mathrm{MES} = \sum_{k} w_k\, s_k^{\text{norm}}, \qquad \sum_k w_k = 1,
@@ -383,7 +383,7 @@ absent strong prior information~\cite{nardo2008}.
 
 \subsection{Weighting: Determination and Sensitivity}
 The equal-weight baseline is a deliberate, stated choice, but its influence is
-tested against three alternatives (§4.6): \emph{entropy} weights (from each
+tested against three alternatives (Sec.~4.6): \emph{entropy} weights (from each
 sub-index's dispersion), \emph{PCA} weights (first-component loadings), and
 \emph{AHP-style} weights (illustrative expert priorities pending a formal Analytic
 Hierarchy Process elicitation: transit 0.40, walk 0.30, bike 0.15, EV 0.15). If the sign, magnitude, and significance of the equity correlations are
@@ -407,7 +407,7 @@ z=\operatorname{arctanh}(r),\quad \mathrm{SE}=\tfrac{1}{\sqrt{n-3}},\quad
 \mathrm{CI}_{95\%}=\tanh\!\big(z\pm1.96\,\mathrm{SE}\big).
 \]
 Spearman rank correlation is computed as a monotonic robustness variant
-(reported in §4.2); it agrees in sign with Pearson across all cities.
+(reported in Sec.~4.2); it agrees in sign with Pearson across all cities.
 
 \subsection{Spatial Autocorrelation --- Justification}
 Ordinary correlation ignores that tracts are spatially embedded. Global Moran's
@@ -491,8 +491,8 @@ associated with renter share ($r=0.53$ to $0.69$). The association with percent
 non-white is positive but weak ($r=0.10$ to $0.14$). Descriptively, the MES
 co-occurs with higher shares of car-free and renter households --- the dense
 urban core; the raw negative income association is probed for confounding in
-§4.7, where it largely disappears once urban form is controlled. All coefficients
-are associational, not causal, and (as §4.7 shows) their significance is
+Sec.~4.7, where it largely disappears once urban form is controlled. All coefficients
+are associational, not causal, and (as Sec.~4.7 shows) their significance is
 overstated by spatial dependence. Figure~\ref{fig:corr} visualizes the full
 correlation structure for Chicago. A Spearman rank check agrees in sign with every Pearson
 coefficient in all three cities; the strong zero-vehicle and renter associations
@@ -642,8 +642,8 @@ highest dispersion, yet even this extreme reweighting does not flip any sign
 (RQ1).
 
 \subsection{Robustness: Confounding, Spatial Dependence, and EV Data}
-Because the bivariate correlations (§4.2) neither control for confounders nor
-account for the strong spatial dependence (§4.3), four robustness checks were
+Because the bivariate correlations (Sec.~4.2) neither control for confounders nor
+account for the strong spatial dependence (Sec.~4.3), four robustness checks were
 run (Table~\ref{tab:robust}).
 
 \emph{Urban-form confounding.} Adding population density and distance to the CBD
@@ -715,7 +715,7 @@ what it \emph{infers}. Four results are demonstrated and robust across all three
 cities. (1) The MES is strongly spatially clustered (Moran's $I=0.82$--$0.92$):
 supply inequity is structural and place-based, not scattered. (2) The MES is
 positively associated with car-free and renter shares (associational; the
-ordinary significance is corrected via spatial regression, §4.7). (3) The
+ordinary significance is corrected via spatial regression, Sec.~4.7). (3) The
 bivariate \emph{negative} MES--income association is largely explained by urban
 form --- it does not survive density/centrality controls or spatial regression
 except in Seattle --- so it must not be read as an income effect per se. (4) The
@@ -764,7 +764,7 @@ are valid). (4) \emph{Cross-sectional, three cities}: the analysis is a single
 snapshot for three metros and is not yet generalizable nationally. (5)
 \emph{Inferential}: because the MES is strongly spatially autocorrelated
 (Moran's $I\approx0.9$), ordinary correlation $p$-values are optimistic; we
-therefore report spatial-lag/error models and urban-form controls (§4.7), which
+therefore report spatial-lag/error models and urban-form controls (Sec.~4.7), which
 substantially attenuate the income association. Residual caveats are that the
 associations are ecological (tract-level, not individual-level) and that
 confounders beyond density and centrality are not modelled.
