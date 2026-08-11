@@ -600,7 +600,12 @@ profiles (Table~\ref{tab:typology}). Chicago and Seattle resolve into two groups
 while Houston resolves into three, adding a distinctive ``walk-rich, bike-poor''
 class (537 tracts) that has moderate walkability and transit but almost no
 cycling infrastructure. Across all cities the near-zero bicycle centroid confirms
-that cycling is the systematically weakest dimension.
+that cycling is the systematically weakest dimension. The silhouette for the
+selected $k$ is 0.48 (Chicago, $k{=}2$), 0.48 (Houston, $k{=}3$), and 0.41
+(Seattle, $k{=}2$), and the partitions are perfectly reproducible across random
+initializations (Sec.~4.7). Because $k$ differs across cities, similarly named
+profiles are \emph{not} assumed to represent identical neighborhood structures;
+cross-city comparison is by centroid shape, not by label.
 
 \begin{table}[htbp]
 \centering
@@ -669,8 +674,12 @@ Index $=1.00$; silhouette $0.41$--$0.48$), so the typologies are not seed
 artefacts.
 
 \emph{EV data.} Recomputing a three-dimension MES without the (OSM-sourced) EV
-layer barely changes its correlation with income ($|\Delta r| = 0.002$--$0.053$),
-so the conclusions are not driven by the least-certain dimension.
+layer leaves the principal findings intact on every axis: the correlations with
+income, renter share, and zero-vehicle share all move by $|\Delta r|\leq 0.05$;
+the mobility-desert set overlaps the four-dimension set by a Jaccard of
+$0.71$--$0.92$; and the spatial clustering is essentially unchanged (Moran's $I$
+of $0.77$--$0.87$ versus $0.82$--$0.92$). The conclusions therefore do not depend
+on the least-certain dimension.
 
 \begin{table}[htbp]
 \centering
@@ -681,10 +690,10 @@ EV layer is non-decisive.}
 \small
 \begin{tabularx}{\textwidth}{l Y Y l c c}
 \toprule
-\textbf{City} & \textbf{MES--income, bivariate} & \textbf{+ urban-form controls} & \textbf{Spatial (AIC)} & \textbf{Cluster ARI} & \textbf{EV $|\Delta r|$} \\
+\textbf{City} & \textbf{MES--income, bivariate} & \textbf{+ urban-form controls} & \textbf{Spatial (AIC)} & \textbf{Cluster ARI} & \textbf{EV max $|\Delta r|$} \\
 \midrule
 Chicago & $-$, $p{=}.002$ & $+$, weak & error & 1.00 & 0.025 \\
-Houston & $-$, $p{<}.001$ & n.s.\ ($p{=}.64$) & lag & 1.00 & 0.002 \\
+Houston & $-$, $p{<}.001$ & n.s.\ ($p{=}.64$) & lag & 1.00 & 0.009 \\
 Seattle & $-$, $p{<}.001$ & $-$, $p{<}.001$ & lag & 1.00 & 0.053 \\
 \bottomrule
 \end{tabularx}
@@ -774,10 +783,12 @@ Priorities are: extending to the Phase-2 cities (Phoenix, Atlanta, Detroit) and
 beyond for national generalizability; substituting authoritative AFDC EV data and
 adding transit \emph{service quality} (headway reliability, e.g.\ from the FTA
 National Transit Database); layering EPA EJScreen environmental-justice indicators
-alongside the demographic cross-tabs; incorporating demand-side accessibility
-(jobs reachable within a travel-time budget) to test the supply--demand mismatch
-directly; and a longitudinal extension to measure whether targeted investment
-narrows the gaps the MES identifies.
+alongside the demographic cross-tabs; and, most directly, developing a
+\emph{demand-adjusted MES} that combines infrastructure supply with transportation
+need (e.g., zero-vehicle households and jobs reachable within a travel-time budget)
+so that the supply--need relationship can be modelled rather than inferred.
+A longitudinal extension would then measure whether targeted investment narrows
+the gaps the MES identifies.
 
 \subsection{Conclusion}
 This project delivers an integrated, transparent, and reproducible measure of

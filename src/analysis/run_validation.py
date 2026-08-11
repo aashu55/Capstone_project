@@ -18,7 +18,7 @@ import geopandas as gpd
 import pandas as pd
 
 from src.analysis.clustering_stability import cluster_with_stability
-from src.analysis.ev_robustness import mes_without_ev
+from src.analysis.ev_robustness import ev_robustness_full
 from src.analysis.index_validity import validity_summary
 from src.analysis.spatial_regression import spatial_models
 from src.analysis.urban_form_controls import add_urban_form, multivariable_ols
@@ -54,9 +54,10 @@ def run_city(city_key: str) -> dict:
     cs = cluster_with_stability(gdf, k=_k_for(city_key))
     print(f"  clustering k={cs['k']}: silhouette={cs['silhouette']}, mean ARI={cs['mean_ARI']}")
 
-    ev = mes_without_ev(gdf)
-    print(f"  EV robustness: r(MES,income)={ev['r_full_MES']:.3f} vs "
-          f"r(MES_noEV,income)={ev['r_noEV_MES']:.3f} (Δ={ev['delta_r']:.3f})")
+    ev = ev_robustness_full(gdf)
+    print(f"  EV robustness: max |dr|={ev['max_delta_r']:.3f} (income/renter/no-veh), "
+          f"desert Jaccard={ev['desert_jaccard']:.2f}, "
+          f"Moran full/noEV={ev['moran_full']:.2f}/{ev['moran_noEV']:.2f}")
 
     return {
         "city": name,
@@ -71,9 +72,10 @@ def run_city(city_key: str) -> dict:
         "cluster_k": cs["k"],
         "cluster_silhouette": cs["silhouette"],
         "cluster_mean_ARI": cs["mean_ARI"],
-        "ev_r_full": ev["r_full_MES"],
-        "ev_r_noEV": ev["r_noEV_MES"],
-        "ev_delta_r": ev["delta_r"],
+        "ev_max_delta_r": ev["max_delta_r"],
+        "ev_desert_jaccard": ev["desert_jaccard"],
+        "ev_moran_full": ev["moran_full"],
+        "ev_moran_noEV": ev["moran_noEV"],
     }
 
 
