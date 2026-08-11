@@ -6,6 +6,7 @@
 \usepackage{cite}
 \usepackage{microtype}
 \usepackage{stfloats}
+\usepackage{balance}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -64,6 +65,15 @@ empirical result---that the apparent income gradient in mobility supply is
 largely an urban-form artifact---obtained through confounder controls and
 spatial regression. The dashboard is a dissemination layer, not the
 contribution.
+
+\begin{figure*}[b]
+\centering
+\includegraphics[width=\textwidth]{choropleth_chicago.png}
+\caption{Chicago MES and its four sub-indices (green = better served, red =
+worse). Walkability and transit concentrate centrally; dedicated bicycle
+infrastructure is sparse citywide.}
+\label{fig:map}
+\end{figure*}
 
 \section{Related Work}
 Single-dimension equity evidence is strong but isolated: transit
@@ -148,26 +158,46 @@ Seattle & 495 & 36.2 & 0.82 & $-$ ($p{<}.001$) & $-$ ($p{<}.001$) & 1.00 \\
 \end{tabular}
 \end{table*}
 
+\subsection{Spatial Cold Spots, Deserts, and Typology}
+Local Moran's $I$ (Fig.~\ref{fig:lisa}) resolves the clustering into large,
+statistically significant low-low ``cold spots'' on each city's periphery and
+high-high cores, identifying contiguous under-served areas rather than isolated
+tracts. Because a mobility desert is defined \emph{within} each city (bottom MES
+quartile), the $\approx 25\%$ share is definitional; the substantive results are
+that desert tracts are higher-income peripheries that nonetheless contain large
+minority populations (52--64\% non-white in Chicago/Houston), that the
+classification is stable under threshold changes (Jaccard $0.80$--$0.83$ across
+the 20th/25th/30th percentiles), and that compounded deserts (low on $\geq 2$
+dimensions) concentrate the disadvantage. K-means recovers interpretable
+profiles---a well-served multimodal core, a uniformly under-served periphery,
+and, in Houston, a distinctive ``walk-rich, bike-poor'' class (537 tracts);
+silhouettes for the selected $k$ are $0.41$--$0.48$ and the partitions are
+reproducible across initializations (mean ARI $=1.00$). Because $k$ differs by
+city, similarly named profiles are compared by centroid shape, not label.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.32\textwidth]{lisa_chicago.png}\hfill
+\includegraphics[width=0.32\textwidth]{lisa_houston.png}\hfill
+\includegraphics[width=0.32\textwidth]{lisa_seattle.png}
+\caption{Local Moran's $I$ (LISA) clusters of the MES (Chicago, Houston,
+Seattle). Red = high-high (well-served cores); blue = low-low (under-served
+cold spots).}
+\label{fig:lisa}
+\end{figure*}
+
 \subsection{Confounding, Spatial Dependence, Robustness}
 Adding density and CBD distance to an OLS of the MES on income changes the
 income coefficient sharply: it becomes non-significant in Houston, reverses to
 weakly positive in Chicago, and remains negative and significant only in
 Seattle. Spatial-lag/error models (error preferred for Chicago, lag for Houston
 and Seattle by AIC) corroborate this: once spatial dependence is modeled, the
-income association is negligible except in Seattle. The K-means typology is
-perfectly reproducible (mean ARI $=1.00$; silhouette $0.41$--$0.48$), and
-dropping the OSM-sourced EV layer barely changes the income correlation
-($|\Delta r|=0.002$--$0.053$). The desert classification is stable across the
-20th/25th/30th percentiles (Jaccard $0.80$--$0.83$).
-
-\begin{figure*}[b]
-\centering
-\includegraphics[width=\textwidth]{choropleth_chicago.png}
-\caption{Chicago MES and its four sub-indices (green = better served, red =
-worse). Walkability and transit concentrate centrally; dedicated bicycle
-infrastructure is sparse citywide.}
-\label{fig:map}
-\end{figure*}
+income association is negligible except in Seattle, confirming that ordinary
+significance was overstated. Dropping the OSM-sourced EV layer leaves the
+findings intact on every axis---the income, renter, and zero-vehicle
+correlations move by $|\Delta r|\leq 0.05$, the desert set overlaps by a Jaccard
+of $0.71$--$0.92$, and spatial clustering is essentially unchanged---so the
+conclusions do not depend on the least-certain dimension.
 
 \section{Discussion and Conclusion}
 \emph{What the data demonstrate:} mobility supply is strongly spatially
@@ -183,15 +213,28 @@ associationally, as a supply--\emph{need} mismatch; demand itself is not
 modeled. Compounded deserts and low-low LISA cold spots locate the tracts where
 car-free and minority households (52--64\% non-white in the Chicago/Houston
 deserts) plausibly face the widest gap, and are where the framework adds most
-policy value.
+policy value. In practice this supports neighborhood-level targeting: ranking
+tracts, separating single- from multi-dimension deficits, and suggesting
+differentiated interventions such as cycling investment for walk-rich/bike-poor
+areas and first/last-mile transit for under-served peripheries.
+
+\emph{Cross-city reading:} because normalization is performed within each city,
+absolute MES levels are not comparable across cities---a score of 70 in Houston
+is not equivalent to 70 in Chicago. The robust comparative result is instead
+that the same qualitative pattern (strong spatial clustering, positive
+car-free/renter associations, and an income gradient largely explained by urban
+form) recurs in all three metros, with Seattle the one case where a negative
+income association survives controls and therefore merits city-specific study.
 
 \emph{Limitations} are the supply-side scope, the OSM EV proxy, within-city
 normalization (no cross-city levels), and a three-city cross-section. Future
 work extends to more cities, substitutes authoritative AFDC EV and FTA transit
-service-quality data, and adds demand-side accessibility. The full pipeline and
-dashboard are open-source, making the method transferable to any city with open
-data.
+service-quality data, and---most directly---develops a \emph{demand-adjusted MES}
+that combines infrastructure supply with transportation need so the supply--need
+relationship can be modeled rather than inferred. The full pipeline and dashboard
+are open-source, making the method transferable to any city with open data.
 
+\balance
 \begin{thebibliography}{00}
 \bibitem{aman2020} J.~J. Aman and J.~Smith-Colin, ``Transit deserts: Equity analysis of public transit accessibility,'' \emph{J. Transp. Geogr.}, vol.~89, p.~102869, 2020.
 \bibitem{urban2022} Urban Institute, ``Redefining Walkability: A Neighborhood-Level Analysis,'' Washington, DC, 2022.
