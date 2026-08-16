@@ -38,6 +38,13 @@ from src.config import CITIES, MES_DIR, OUTPUTS_DIR  # noqa: E402
 
 warnings.filterwarnings("ignore")
 sns.set_theme(style="whitegrid")
+# Larger fonts + higher DPI so labels/legends stay readable at page size.
+plt.rcParams.update({
+    "figure.dpi": 200, "savefig.dpi": 200,
+    "axes.titlesize": 16, "axes.labelsize": 13,
+    "legend.fontsize": 12, "legend.title_fontsize": 12,
+    "xtick.labelsize": 11, "ytick.labelsize": 11,
+})
 FIG_DIR = OUTPUTS_DIR / "figures"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -61,10 +68,10 @@ def choropleth_png(gdf: gpd.GeoDataFrame, city: str) -> None:
         gdf.plot(column=col, cmap="RdYlGn", linewidth=0.05, edgecolor="grey",
                  legend=True, ax=ax, vmin=0, vmax=100,
                  legend_kwds={"shrink": 0.6})
-        ax.set_title(f"{CITIES[city]['name']} — {SUB_TITLES[col]}")
+        ax.set_title(f"{CITIES[city]['name']} — {SUB_TITLES[col]}", fontsize=17)
         ax.axis("off")
     fig.tight_layout()
-    fig.savefig(FIG_DIR / f"choropleth_{city}.png", dpi=150, bbox_inches="tight")
+    fig.savefig(FIG_DIR / f"choropleth_{city}.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -76,7 +83,7 @@ def elbow_silhouette_png(metrics: dict, city: str) -> None:
     a2.axvline(metrics["k"], ls="--", color="grey")
     a2.set(xlabel="k", ylabel="Silhouette", title=f"Silhouette (best k={metrics['k']})")
     fig.tight_layout()
-    fig.savefig(FIG_DIR / f"clustering_{city}.png", dpi=150)
+    fig.savefig(FIG_DIR / f"clustering_{city}.png", dpi=200)
     plt.close(fig)
 
 
@@ -90,7 +97,7 @@ def corr_heatmap_png(gdf: gpd.GeoDataFrame, city: str) -> None:
                 cbar_kws={"shrink": 0.7})
     ax.set_title(f"{CITIES[city]['name']} — correlation matrix")
     fig.tight_layout()
-    fig.savefig(FIG_DIR / f"corr_heatmap_{city}.png", dpi=150)
+    fig.savefig(FIG_DIR / f"corr_heatmap_{city}.png", dpi=200)
     plt.close(fig)
 
 
@@ -103,11 +110,12 @@ def lisa_png(lisa_gdf: gpd.GeoDataFrame, city: str) -> None:
         if len(sub):
             sub.plot(ax=ax, color=c, linewidth=0.1, edgecolor="white",
                      label=f"{cl} (n={len(sub)})")
-    ax.legend(title="LISA cluster", loc="lower left", fontsize=8)
-    ax.set_title(f"{CITIES[city]['name']} — MES spatial clusters (LISA)")
+    ax.legend(title="LISA cluster", loc="lower left", fontsize=12, title_fontsize=13,
+              framealpha=0.9)
+    ax.set_title(f"{CITIES[city]['name']} — MES spatial clusters (LISA)", fontsize=17)
     ax.axis("off")
     fig.tight_layout()
-    fig.savefig(FIG_DIR / f"lisa_{city}.png", dpi=150)
+    fig.savefig(FIG_DIR / f"lisa_{city}.png", dpi=200)
     plt.close(fig)
 
 
